@@ -1,3 +1,4 @@
+using CA.BLL;
 using CA.DAL;
 using CA.DAL.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -16,8 +17,9 @@ builder.Services.AddControllers()
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddDataAccess(builder.Configuration);
-// builder.Services.AddApplication();
+builder.Services
+    .AddDataAccess(builder.Configuration)
+    .AddApplication();
 
 var app = builder.Build();
 
