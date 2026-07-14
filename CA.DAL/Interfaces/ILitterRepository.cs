@@ -7,5 +7,5 @@ public interface ILitterRepository
 {
     Task<Litter?> GetByIdAsync(Guid id);
     Task<(List<Litter> items, int totalCount)> GetByBreederAsync(
-        Guid breederId, LitterStatus status, int pageSize, int pageNumber);
+        Guid breederId, LitterStatus? status, int pageSize, int pageNumber);
 }
