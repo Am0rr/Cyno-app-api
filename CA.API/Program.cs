@@ -1,3 +1,4 @@
+using CA.API.Middleware;
 using CA.BLL;
 using CA.DAL;
 using CA.DAL.Persistence;
@@ -23,7 +24,7 @@ builder.Services
 
 var app = builder.Build();
 
-// app.UseMiddleware<GlobalExceptionHandler>();
+app.UseMiddleware<GlobalExceptionHandler>();
 
 using (var scope = app.Services.CreateScope())
 {
