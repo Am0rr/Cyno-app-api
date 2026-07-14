@@ -1,3 +1,4 @@
+using CA.DAL.Enums;
 using CA.DAL.Exceptions;
 
 namespace CA.DAL.Entities;
@@ -17,5 +18,16 @@ public class BreederBenefit
 
         BreederId = breederId;
         FreeLimit = freeLimit;
+    }
+
+    public void EnlargeUsedCount(int count)
+    {
+        if (count <= 0)
+            throw new DomainException("Count must be positive.");
+
+        if (UsedCount + count > FreeLimit)
+            throw new DomainException("Cannot exceed free publication limit.");
+
+        UsedCount += count;
     }
 }

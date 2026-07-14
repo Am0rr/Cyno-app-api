@@ -13,4 +13,9 @@ public class Litter : BaseEntity
     {
         BreederId = breederId;
     }
+
+    public void ChangeStatus(LitterStatus newStatus)
+    {
+        Status = newStatus;
+    }
 }

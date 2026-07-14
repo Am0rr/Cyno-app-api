@@ -2,7 +2,7 @@ using CA.BLL.DTOs;
 
 namespace CA.BLL.Interfaces;
 
-public interface ILitterInterface
+public interface ILitterService
 {
     Task<PublishResponse> PublishAsync(Guid litterId, Guid breederId);
 
