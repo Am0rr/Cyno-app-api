@@ -20,6 +20,9 @@ public class LitterService(
     private readonly INotificationService _notificationService = notificationService;
     private readonly AppDbContext _context = context;
 
+    // TODO: Винести координацію SaveChanges/транзакції в окремий IUnitOfWork,
+    // якщо кількість репозиторіїв та точок збереження зросте — зараз це не виправдано для 2-3 сутностей.
+
     public async Task<PublishResponse> PublishAsync(Guid litterId, Guid breederId)
     {
         var litter = await _litterRepository.GetByIdAsync(litterId)
@@ -43,9 +46,10 @@ public class LitterService(
             throw new DomainException("You have run out of free publications.");
         }
 
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+
         try
         {
-            await _context.Database.BeginTransactionAsync();
 
             benefit.EnlargeUsedCount(1);
 
@@ -54,11 +58,11 @@ public class LitterService(
             _context.Logs.Add(new AuditLog(litter.Id, AuditActions.PublishedForFree));
 
             await _context.SaveChangesAsync();
-            await _context.Database.CommitTransactionAsync();
+            await transaction.CommitAsync();
         }
         catch
         {
-            await _context.Database.RollbackTransactionAsync();
+            await transaction.RollbackAsync();
             throw;
         }
 
