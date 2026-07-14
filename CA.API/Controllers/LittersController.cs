@@ -7,7 +7,7 @@ namespace CA.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class LittersController(LitterService litterService) : ControllerBase
+public class LittersController(ILitterService litterService) : ControllerBase
 {
     private readonly ILitterService _litterService = litterService;
 

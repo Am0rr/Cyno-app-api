@@ -2,6 +2,7 @@ using CA.API.Middleware;
 using CA.BLL;
 using CA.DAL;
 using CA.DAL.Persistence;
+using CA.DAL.Persistence.Seed;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -37,6 +38,8 @@ using (var scope = app.Services.CreateScope())
         logger.LogInformation("Starting database migration...");
         await context.Database.MigrateAsync();
         logger.LogInformation("Database migrated successfully.");
+
+        await DbSeeder.SeedAsync(context);
     }
     catch (Exception ex)
     {
