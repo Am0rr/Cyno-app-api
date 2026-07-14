@@ -9,6 +9,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddScoped<ILitterService, LitterService>();
+        services.AddScoped<INotificationService, NotificationService>();
 
         return services;
     }
