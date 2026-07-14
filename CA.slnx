@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CA.API/CA.API.csproj" />
+  <Project Path="CA.BLL/CA.BLL.csproj" />
+  <Project Path="CA.DAL/CA.DAL.csproj" />
+</Solution>
