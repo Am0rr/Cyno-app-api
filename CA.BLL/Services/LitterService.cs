@@ -6,6 +6,8 @@ using CA.DAL.Exceptions;
 using CA.DAL.Interfaces;
 using CA.DAL.Persistence;
 using CA.BLL.DTOs;
+using System.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CA.BLL.Services;
 
@@ -50,7 +52,6 @@ public class LitterService(
 
         try
         {
-
             benefit.EnlargeUsedCount(1);
 
             litter.ChangeStatus(LitterStatus.Published);
@@ -60,10 +61,10 @@ public class LitterService(
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
         }
-        catch
+        catch (DbUpdateConcurrencyException)
         {
             await transaction.RollbackAsync();
-            throw;
+            throw new DomainException("Concurrent publish detected. Please try again.");
         }
 
         await _notificationService.NotifyLitterPublishedAsync(breederId, litter.Id);
