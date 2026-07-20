@@ -1,4 +1,3 @@
-using CA.DAL.Enums;
 using CA.DAL.Exceptions;
 
 namespace CA.DAL.Entities;
@@ -8,6 +7,7 @@ public class BreederBenefit
     public Guid BreederId { get; private set; }
     public int FreeLimit { get; private set; }
     public int UsedCount { get; private set; } = 0;
+    public byte[] RowVersion { get; private set; } = null!;
 
     protected BreederBenefit() { }
 
