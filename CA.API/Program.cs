@@ -1,5 +1,7 @@
+using CA.API.Context;
 using CA.API.Middleware;
 using CA.BLL;
+using CA.BLL.Interfaces;
 using CA.DAL;
 using CA.DAL.Persistence;
 using CA.DAL.Persistence.Seed;
@@ -21,7 +23,9 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services
     .AddDataAccess(builder.Configuration)
-    .AddApplication();
+    .AddApplication()
+    .AddHttpContextAccessor()
+    .AddScoped<ICurrentBreederContext, HttpCurrentBreederContext>();
 
 var app = builder.Build();
 
