@@ -19,6 +19,14 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow;
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+        policy.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services
@@ -28,6 +36,8 @@ builder.Services
     .AddScoped<ICurrentBreederContext, HttpCurrentBreederContext>();
 
 var app = builder.Build();
+
+app.UseCors("AllowFrontend");
 
 app.UseMiddleware<GlobalExceptionHandler>();
 
