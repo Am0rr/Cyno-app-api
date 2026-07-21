@@ -1,1 +1,80 @@
-<p>litter-list works!</p>
+<div class="max-w-4xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4">Litters</h1>
+
+  <div class="flex gap-4 mb-4">
+    <input
+      [(ngModel)]="breederIdInput"
+      (change)="onBreederIdChange()"
+      placeholder="Breeder ID (Guid)"
+      class="border p-2 rounded flex-1"
+    />
+    <select [(ngModel)]="selectedStatus" class="border p-2 rounded">
+      @for (s of statuses; track s) {
+        <option [value]="s">{{ s || 'All statuses' }}</option>
+      }
+    </select>
+    <button
+      (click)="loadLitters()"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    >
+      Load
+    </button>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="bg-red-100 text-red-700 p-3 rounded mb-4">{{ errorMessage() }}</div>
+  }
+
+  @if (isLoading()) {
+    <div class="text-gray-500">Loading...</div>
+  }
+
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="bg-gray-100 text-left">
+        <th class="p-2 border">Id</th>
+        <th class="p-2 border">Status</th>
+        <th class="p-2 border">Created At</th>
+        <th class="p-2 border">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (litter of items(); track litter.id) {
+        <tr>
+          <td class="p-2 border text-sm">{{ litter.id }}</td>
+          <td class="p-2 border">{{ litter.status }}</td>
+          <td class="p-2 border">{{ litter.createdAt | date: 'short' }}</td>
+          <td class="p-2 border">
+            @if (litter.status === 'Approved') {
+              <button
+                (click)="publish(litter.id)"
+                [disabled]="publishingId() === litter.id"
+                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 disabled:opacity-50"
+              >
+                {{ publishingId() === litter.id ? 'Publishing...' : 'Publish' }}
+              </button>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="flex justify-between items-center mt-4">
+    <button
+      (click)="prevPage()"
+      [disabled]="pageNumber() === 1"
+      class="px-3 py-1 border rounded disabled:opacity-50"
+    >
+      Previous
+    </button>
+    <span>Page {{ pageNumber() }} (Total: {{ totalCount() }})</span>
+    <button
+      (click)="nextPage()"
+      [disabled]="pageNumber() >= totalPages()"
+      class="px-3 py-1 border rounded disabled:opacity-50"
+    >
+      Next
+    </button>
+  </div>
+</div>

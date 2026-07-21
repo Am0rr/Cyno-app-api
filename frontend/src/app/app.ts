@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
+import { LitterListComponent } from './components/litter-list/litter-list';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [LitterListComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('frontend');
