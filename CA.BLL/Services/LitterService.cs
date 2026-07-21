@@ -74,6 +74,12 @@ public class LitterService(
 
     public async Task<PagedLitterResponse> GetLittersAsync(Guid breederId, GetLittersRequest request)
     {
+        if (request.PageNumber <= 0 || request.PageSize <= 0)
+            throw new DomainException("Page size and number must be greater than zero.");
+
+        if (request.PageSize > 100)
+            throw new DomainException("Page size cannot exceed 100.");
+
         var (items, totalCount) = await _litterRepository.GetByBreederAsync(
             breederId, request.Status, request.PageSize, request.PageNumber);
 
