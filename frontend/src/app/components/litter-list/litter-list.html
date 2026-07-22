@@ -4,7 +4,7 @@
   <div class="flex gap-4 mb-4">
     <input
       [(ngModel)]="breederIdInput"
-      (change)="onBreederIdChange()"
+      (ngModelChange)="onBreederIdChange()"
       placeholder="Breeder ID (Guid)"
       class="border p-2 rounded flex-1"
     />
@@ -15,7 +15,8 @@
     </select>
     <button
       (click)="loadLitters()"
-      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      [disabled]="!breederIdInput"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
     >
       Load
     </button>
