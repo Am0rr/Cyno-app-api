@@ -6,6 +6,7 @@ public class Litter : BaseEntity
 {
     public Guid BreederId { get; private set; }
     public LitterStatus Status { get; private set; }
+    public byte[] RowVersion { get; private set; } = null!;
 
     protected Litter() { }
 
