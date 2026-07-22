@@ -15,6 +15,6 @@ public class LitterConfiguration : IEntityTypeConfiguration<Litter>
         builder.Property(l => l.CreatedAt).IsRequired();
         builder.Property(l => l.BreederId).IsRequired();
         builder.Property(l => l.Status).IsRequired().HasConversion<string>();
-        builder.Property(l => l.RowVersion).IsRowVersion();
+        builder.Property(l => l.RowVersion).IsConcurrencyToken();
     }
 }

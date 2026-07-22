@@ -7,7 +7,7 @@ public class BreederBenefit
     public Guid BreederId { get; private set; }
     public int FreeLimit { get; private set; }
     public int UsedCount { get; private set; } = 0;
-    public byte[] RowVersion { get; private set; } = null!;
+    public Guid RowVersion { get; private set; } = Guid.NewGuid();
 
     protected BreederBenefit() { }
 
@@ -29,5 +29,6 @@ public class BreederBenefit
             throw new DomainException("Cannot exceed free publication limit.");
 
         UsedCount += count;
+        RowVersion = Guid.NewGuid();
     }
 }

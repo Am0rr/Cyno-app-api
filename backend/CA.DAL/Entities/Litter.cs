@@ -6,7 +6,7 @@ public class Litter : BaseEntity
 {
     public Guid BreederId { get; private set; }
     public LitterStatus Status { get; private set; }
-    public byte[] RowVersion { get; private set; } = null!;
+    public Guid RowVersion { get; private set; } = Guid.NewGuid();
 
     protected Litter() { }
 
@@ -19,5 +19,6 @@ public class Litter : BaseEntity
     public void ChangeStatus(LitterStatus newStatus)
     {
         Status = newStatus;
+        RowVersion = Guid.NewGuid();
     }
 }
